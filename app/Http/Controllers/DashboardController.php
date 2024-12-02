@@ -28,11 +28,18 @@ class DashboardController extends Controller
                 ->sum('amount');
         }
 
-        // Monthly sales trends (line chart)
-        $monthlySales = Sale::selectRaw('DATE_FORMAT(created_at, "%b") as month, SUM(amount) as total_sales')
-            ->groupByRaw('DATE_FORMAT(created_at, "%b")')
-            ->orderByRaw('MIN(created_at)')
-            ->get();
+        // Monthly sales trends (line chart) mysql
+        // $monthlySales = Sale::selectRaw('DATE_FORMAT(created_at, "%b") as month, SUM(amount) as total_sales')
+        //     ->groupByRaw('DATE_FORMAT(created_at, "%b")')
+        //     ->orderByRaw('MIN(created_at)')
+        //     ->get();
+
+        // Monthly sales trends (line chart) pgsql
+        $monthlySales = Sale::selectRaw('TO_CHAR(created_at, \'Mon\') as month, SUM(amount) as total_sales')
+        ->groupByRaw('TO_CHAR(created_at, \'Mon\')')
+        ->orderByRaw('MIN(created_at)')
+        ->get();
+
 
         // Top 5 customers by sales value (bar chart)
         $topCustomers = Sale::selectRaw('customer_id, SUM(amount) as total_sales')
