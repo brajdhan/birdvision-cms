@@ -20,6 +20,8 @@ class CustomerFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'phone' => fake()->numerify('##########'),
+            'created_at'=> fake()->dateTimeThisDecade(), 
+            'updated_at'=> fake()->dateTimeThisDecade(), 
         ];
     }
 }

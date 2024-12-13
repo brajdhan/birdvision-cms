@@ -28,18 +28,30 @@ class DashboardController extends Controller
                 ->sum('amount');
         }
 
+        $monthOrder = [
+            'Jan' => 1, 'Feb' => 2, 'Mar' => 3, 'Apr' => 4, 'May' => 5, 'Jun' => 6,
+            'Jul' => 7, 'Aug' => 8, 'Sep' => 9, 'Oct' => 10, 'Nov' => 11, 'Dec' => 12
+        ];
+
         // Monthly sales trends (line chart) mysql
-        $monthlySales = Sale::selectRaw('DATE_FORMAT(created_at, "%b") as month, SUM(amount) as total_sales')
+        $monthlySalesArr = Sale::selectRaw('DATE_FORMAT(created_at, "%b") as month, SUM(amount) as total_sales')
             ->groupByRaw('DATE_FORMAT(created_at, "%b")')
             ->orderByRaw('MIN(created_at)')
-            ->get();
+            ->get()->toArray();
+
 
         // Monthly sales trends (line chart) pgsql
-        // $monthlySales = Sale::selectRaw('TO_CHAR(created_at, \'Mon\') as month, SUM(amount) as total_sales')
+        // $monthlySalesArr = Sale::selectRaw('TO_CHAR(created_at, \'Mon\') as month, SUM(amount) as total_sales')
         // ->groupByRaw('TO_CHAR(created_at, \'Mon\')')
         // ->orderByRaw('MIN(created_at)')
-        // ->get();
+        // ->get()->toArray();
 
+        usort($monthlySalesArr, function($a, $b) use ($monthOrder) {
+            return $monthOrder[$a['month']] <=> $monthOrder[$b['month']];
+        });
+        $monthlySales = array_map(function($item) {
+            return (object) $item;
+        }, $monthlySalesArr);
 
         // Top 5 customers by sales value (bar chart)
         $topCustomers = Sale::selectRaw('customer_id, SUM(amount) as total_sales')

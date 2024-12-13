@@ -19,6 +19,8 @@ class SaleFactory extends Factory
         return [
             'product_name' => fake()->name(),
             'amount' => fake()->randomFloat(2, 1, 1000), 
+            'created_at'=> fake()->dateTimeThisDecade(), 
+            'updated_at'=> fake()->dateTimeThisDecade(), 
         ];
     }
 }
