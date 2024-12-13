@@ -18,19 +18,23 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         // Admin User
-        User::factory()->create([
-            'name' => 'Admin User',
-            'email' => 'admin@bird.com',
-            'password' => bcrypt('password'),
-            'role' => 'admin',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Admin User',
+        //     'email' => 'admin@bird.com',
+        //     'password' => bcrypt('password'),
+        //     'role' => 'admin',
+        // ]);
 
         // Sale Manager User
-        User::factory()->create([
-            'name' => 'Sale Manager User',
-            'email' => 'salemanager@bird.com',
-            'password' => bcrypt('password'),
-            'role' => 'sales_manager',
+        // User::factory()->create([
+        //     'name' => 'Sale Manager User',
+        //     'email' => 'salemanager@bird.com',
+        //     'password' => bcrypt('password'),
+        //     'role' => 'sales_manager',
+        // ]);
+
+        $this->call([
+            SaleSeeder::class,
         ]);
     }
 }

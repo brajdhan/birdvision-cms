@@ -22,20 +22,20 @@
 
                             <!-- "Create" Button on the left -->
                             <a href="{{ route('customers.create') }}"
-                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                class="inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                 Create Customer
                             </a>
                             {{-- Import/Export --}}
                             @if (auth()->check() && auth()->user()->role === 'admin')
                                 <a href="{{ route('customers.export-import') }}"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                    class="inline-flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                     Export/Import</a>
                             @endif
 
                             <!-- "Recycle Bin" link -->
                             @if (auth()->check() && auth()->user()->role === 'admin')
                                 <a href="{{ route('customers.recycleBin') }}"
-                                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                                    class="inline-flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
                                     Recycle Bin
                                 </a>
                             @endif
@@ -45,7 +45,7 @@
 
                         <!-- Search Form on the right -->
                         <form method="GET" action="{{ route('customers.index') }}"
-                            class="flex items-center space-x-2">
+                            class="sm:flex items-center space-x-2">
                             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search..."
                                 class="border border-gray-300 p-2 rounded-md" />
                             <button type="submit"
