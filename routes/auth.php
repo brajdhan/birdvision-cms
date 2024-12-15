@@ -19,12 +19,13 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-
+    
     RateLimiter::for('login', function () {
         return Limit::perMinute(3)->by(request('email') ?: request()->ip());
     });
-    Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:login');;
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login')->middleware('throttle:login');
+
+    Route::post('login', [AuthenticatedSessionController::class, 'store'])->middleware('throttle:login');
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
